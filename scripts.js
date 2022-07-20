@@ -1,23 +1,41 @@
 const displayWindow = document.getElementById('display');
 const numbers = document.querySelectorAll('.numbers .num');
+const operations = document.querySelectorAll('.operation');
 
-let ongoingVal = '';
+// set variables
+let ongoingVal= '';
+let result = 0;
+let displayCounter = 0;
+let currentTurn = 'num';
+let currentOp = '';
+let ongoingNum = 0;
 
 numbers.forEach(num => num.addEventListener('click', assignNum));
+operations.forEach(op => op.addEventListener('click', assignOp));
 
 function assignNum() {
     appendVal(this);
 }
 
+function assignOp() {
+    displayCounter = 0;
+    ongoingNum = Number(ongoingVal);
+    if (currentTurn !== 'num') result = operate(result, ongoingNum, currentOp);
+    displayVal(result);
+    currentTurn = 'num';
+    currentOp = this.id;
+}
+
 function appendVal(elem) {
     let val = elem.innerHTML;
-    ongoingVal = ongoingVal + val;
+    ongoingVal = (displayCounter == 0) ? val.toString() : ongoingVal + val;
+    currentTurn = 'operation';
     displayVal(ongoingVal);
+    displayCounter++;
 }
 
 function displayVal(x) {
-    let editedVal = (x.toString().length > 8) ? parseFloat(x).toExponential(3) : x;
-    displayWindow.textContent = editedVal;
+    displayWindow.textContent = x;
 }
 
 function operate(x, y, op) {    
@@ -35,6 +53,8 @@ function operate(x, y, op) {
         case 'divide':
             z = x / y;
             break;
+        default: 
+            z = y;
     }
     return z;
 }
