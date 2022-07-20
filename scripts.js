@@ -1,6 +1,7 @@
 const displayWindow = document.getElementById('display');
 const numbers = document.querySelectorAll('.numbers .num');
 const operations = document.querySelectorAll('.operation');
+const equalsButton = document.getElementById('equal');
 
 // set variables
 let ongoingVal= '';
@@ -12,6 +13,7 @@ let ongoingNum = 0;
 
 numbers.forEach(num => num.addEventListener('click', assignNum));
 operations.forEach(op => op.addEventListener('click', assignOp));
+equalsButton.addEventListener('click', printResult);
 
 function assignNum() {
     appendVal(this);
@@ -29,8 +31,8 @@ function assignOp() {
 function appendVal(elem) {
     let val = elem.innerHTML;
     ongoingVal = (displayCounter == 0) ? val.toString() : ongoingVal + val;
-    currentTurn = 'operation';
     displayVal(ongoingVal);
+    currentTurn = 'operation';
     displayCounter++;
 }
 
@@ -53,8 +55,21 @@ function operate(x, y, op) {
         case 'divide':
             z = x / y;
             break;
+        case 'equals':
+            z = x;
+            break;
         default: 
             z = y;
     }
     return z;
+}
+
+function printResult() {
+    ongoingNum = Number(ongoingVal);
+
+    result = operate(result, ongoingNum, currentOp);
+    displayCounter = 0;
+    currentOp = 'equals';
+    currentTurn = 'operation';
+    displayVal(result);
 }
