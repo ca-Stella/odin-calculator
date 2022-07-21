@@ -2,6 +2,8 @@ const displayWindow = document.getElementById('display');
 const numbers = document.querySelectorAll('.numbers .num');
 const operations = document.querySelectorAll('.operation');
 const equalsButton = document.getElementById('equal');
+const clearAllButton = document.getElementById('clearAll');
+
 
 // set variables
 let ongoingVal = currentOp = '';
@@ -11,6 +13,7 @@ let currentTurn = 'num';
 numbers.forEach(num => num.addEventListener('click', assignNum));
 operations.forEach(op => op.addEventListener('click', assignOp));
 equalsButton.addEventListener('click', printResult);
+clearAllButton.addEventListener('mousedown', clearAll);
 
 function assignNum() {
     appendVal(this);
@@ -41,6 +44,7 @@ function operateOngoing() {
     displayVal(result);
     currentTurn = 'num';
 }
+
 
 function operate(x, y, op) {    
     let z = 0;
