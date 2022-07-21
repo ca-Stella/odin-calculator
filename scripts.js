@@ -22,6 +22,11 @@ function assignNum() {
 function appendVal(elem) {
     if (currentOp == 'equals') clearAll();
     let val = elem.innerHTML;
+    if (val == '.') {
+        if (displayCounter == 0) {
+            val = '0' + val;
+        }
+    }
     ongoingVal = (displayCounter == 0) ? val.toString() : ongoingVal + val;
     displayVal(ongoingVal);
     currentTurn = 'operation';
