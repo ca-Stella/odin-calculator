@@ -4,12 +4,9 @@ const operations = document.querySelectorAll('.operation');
 const equalsButton = document.getElementById('equal');
 
 // set variables
-let ongoingVal= '';
-let result = 0;
-let displayCounter = 0;
+let ongoingVal = currentOp = '';
+let ongoingNum = displayCounter = result = 0;
 let currentTurn = 'num';
-let currentOp = '';
-let ongoingNum = 0;
 
 numbers.forEach(num => num.addEventListener('click', assignNum));
 operations.forEach(op => op.addEventListener('click', assignOp));
@@ -19,16 +16,8 @@ function assignNum() {
     appendVal(this);
 }
 
-function assignOp() {
-    displayCounter = 0;
-    ongoingNum = Number(ongoingVal);
-    if (currentTurn !== 'num') result = operate(result, ongoingNum, currentOp);
-    displayVal(result);
-    currentTurn = 'num';
-    currentOp = this.id;
-}
-
 function appendVal(elem) {
+    if (currentOp == 'equals') clearAll();
     let val = elem.innerHTML;
     ongoingVal = (displayCounter == 0) ? val.toString() : ongoingVal + val;
     displayVal(ongoingVal);
@@ -36,8 +25,21 @@ function appendVal(elem) {
     displayCounter++;
 }
 
-function displayVal(x) {
-    displayWindow.textContent = x;
+function assignOp() {
+    setUpOp();
+    currentOp = this.id;
+}
+
+function setUpOp() {
+    if (currentTurn !== 'num') operateOngoing();
+    displayCounter = 0;
+}
+
+function operateOngoing() {
+    ongoingNum = Number(ongoingVal);
+    result = operate(result, ongoingNum, currentOp);
+    displayVal(result);
+    currentTurn = 'num';
 }
 
 function operate(x, y, op) {    
@@ -66,10 +68,22 @@ function operate(x, y, op) {
 
 function printResult() {
     ongoingNum = Number(ongoingVal);
-
     result = operate(result, ongoingNum, currentOp);
+    displayVal(result);
     displayCounter = 0;
     currentOp = 'equals';
     currentTurn = 'operation';
-    displayVal(result);
+}
+
+function displayVal(x) {
+    displayWindow.textContent = x;
+}
+
+function clearAll() {
+    ongoingNum = 0;
+    result = 0;
+    displayCounter = 0;
+    currentOp = '';
+    ongoingVal = '';
+    displayWindow.textContent = '';
 }
