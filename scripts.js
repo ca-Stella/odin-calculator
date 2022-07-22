@@ -16,6 +16,7 @@ equalsButton.addEventListener('click', printResult);
 clearAllButton.addEventListener('mousedown', clearAll);
 
 function assignNum() {
+    checkInvalid();
     appendVal(this);
 }
 
@@ -41,6 +42,8 @@ function assignOp() {
 function setUpOp() {
     if (currentTurn !== 'num') operateOngoing();
     displayCounter = 0;
+    checkInvalid();
+
 }
 
 function operateOngoing() {
@@ -72,6 +75,9 @@ function operate(x, y, op) {
         default: 
             z = y;
     }
+    if (z === Infinity || isNaN(z)) {
+        z = 'BYE 0';
+    }
     return z;
 }
 
@@ -79,20 +85,29 @@ function printResult() {
     ongoingNum = Number(ongoingVal);
     result = operate(result, ongoingNum, currentOp);
     displayVal(result);
+    checkInvalid();
     displayCounter = 0;
     currentOp = 'equals';
     currentTurn = 'operation';
 }
+
+function checkInvalid() {
+    if (result == 'BYE 0') setNulls();
+} 
 
 function displayVal(x) {
     displayWindow.textContent = x;
 }
 
 function clearAll() {
+    setNulls();
+    displayWindow.textContent = '';
+}
+
+function setNulls() {
     ongoingNum = 0;
     result = 0;
     displayCounter = 0;
     currentOp = '';
     ongoingVal = '';
-    displayWindow.textContent = '';
 }
