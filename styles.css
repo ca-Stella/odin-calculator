@@ -6,6 +6,13 @@ html {
 }
 
 /* Calculator */
+.main {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  margin-bottom: 40px;
+}
+
 .calculator {
   display: flex;
   flex-direction: column;
@@ -18,10 +25,12 @@ html {
   max-width: 360px;
   max-height: 560px;
   padding: 40px;
+  background-color:rgb(255, 244, 230);
+  border: 5px solid black;
+  border-radius: 20px;
 }
 
 #display {
-  font-size: 60px;
   text-align: end;
   display:flex;
   justify-content: end;
@@ -29,8 +38,11 @@ html {
   height: 25%;
   width: 100%;
   margin-bottom: 40px;
+  background-color:rgb(255, 252, 249);
+  font-size: 55px;
+  border: 2px solid black;
+  border-radius: 20px;
 }
-
 
 .calc-input {
   display: flex;
@@ -61,10 +73,24 @@ html {
 button {
   font-size: 30px;
   height: 15%;
+  border-radius: 10px;
 }
 
 .numbers button {
   width: 30%;
+}
+
+button.num {
+  background-color:rgba(235, 176, 105, 0.5);
+}
+
+.math button {
+  width: 100%;
+}
+
+button.operation, 
+button.setting {
+  background-color: rgba(249, 225, 87, 0.3);
 }
 
 /* Footer */
