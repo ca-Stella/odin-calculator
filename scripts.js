@@ -3,6 +3,7 @@ const numbers = document.querySelectorAll('.numbers .num');
 const operations = document.querySelectorAll('.operation');
 const equalsButton = document.getElementById('equal');
 const clearAllButton = document.getElementById('clearAll');
+const deleteButton = document.getElementById('backspace');
 
 
 // set variables
@@ -14,7 +15,9 @@ numbers.forEach(num => num.addEventListener('click', assignNum));
 operations.forEach(op => op.addEventListener('click', assignOp));
 equalsButton.addEventListener('click', printResult);
 clearAllButton.addEventListener('mousedown', clearAll);
+deleteButton.addEventListener('click', deleteOne);
 
+// Functions
 function assignNum() {
     checkInvalid();
     appendVal(this);
@@ -110,4 +113,10 @@ function setNulls() {
     displayCounter = 0;
     currentOp = '';
     ongoingVal = '';
+}
+
+function deleteOne() {
+    ongoingVal = ongoingVal.slice(0,-1);
+    ongoingNum = Number(ongoingVal);
+    displayWindow.textContent = ongoingVal;
 }
