@@ -75,6 +75,9 @@ function operate(x, y, op) {
         case 'exponent':
             z = Math.pow(x, y);
             break;
+        case 'root':
+            z = Math.pow(x, 1/y);
+            break;
         case 'equals':
             z = x;
             break;
