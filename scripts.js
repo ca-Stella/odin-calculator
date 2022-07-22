@@ -72,6 +72,9 @@ function operate(x, y, op) {
         case 'divide':
             z = x / y;
             break;
+        case 'exponent':
+            z = Math.pow(x, y);
+            break;
         case 'equals':
             z = x;
             break;
