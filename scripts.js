@@ -5,10 +5,9 @@ const equalsButton = document.getElementById('equal');
 const clearAllButton = document.getElementById('clearAll');
 const deleteButton = document.getElementById('backspace');
 
-
-// set variables
-let ongoingVal = currentOp = '';
-let ongoingNum = displayCounter = result = 0;
+// Set variables
+let ongoingVal = '', currentOp = '';
+let ongoingNum = 0, displayCounter = 0, result = 0;
 let currentTurn = 'num';
 
 numbers.forEach(num => num.addEventListener('click', assignNum));
@@ -18,6 +17,8 @@ clearAllButton.addEventListener('mousedown', clearAll);
 deleteButton.addEventListener('click', deleteOne);
 
 // Functions
+
+// Assign input as start or continuation of number
 function assignNum() {
     checkInvalid();
     appendVal(this);
@@ -37,25 +38,28 @@ function appendVal(elem) {
     displayCounter++;
 }
 
+// Assign operation based on button clicked
 function assignOp() {
-    setUpOp();
+    ongoingNum = Number(ongoingVal);
+    result = ongoingNum;
+    ongoingVal = 0;
     currentOp = this.id;
+    setUpOp();
 }
 
 function setUpOp() {
     if (currentTurn !== 'num') operateOngoing();
     displayCounter = 0;
     checkInvalid();
-
 }
 
+// Operate 
 function operateOngoing() {
     ongoingNum = Number(ongoingVal);
     result = operate(result, ongoingNum, currentOp);
     displayVal(result);
     currentTurn = 'num';
 }
-
 
 function operate(x, y, op) {    
     let z = 0;
@@ -91,7 +95,7 @@ function operate(x, y, op) {
 }
 
 function printResult() {
-    ongoingNum = Number(ongoingVal);
+    ongoingNum = (ongoingNum == result) ? 0 : Number(ongoingVal);
     result = operate(result, ongoingNum, currentOp);
     displayVal(result);
     checkInvalid();
@@ -100,12 +104,15 @@ function printResult() {
     currentTurn = 'operation';
 }
 
+// Check if result is invalid and reset values if needed
 function checkInvalid() {
     if (result == 'BYE 0') setNulls();
 } 
 
+// Display exact or rounded values based on length
 function displayVal(x) {
-    displayWindow.textContent = x;
+    let editedVal = (x.toString().length > 8) ? parseFloat(x).toExponential(3) : x;
+    displayWindow.textContent = editedVal;
 }
 
 function clearAll() {
