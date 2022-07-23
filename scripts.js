@@ -20,6 +20,8 @@ deleteButton.addEventListener('click', deleteOne);
 
 // Assign input as start or continuation of number
 function assignNum() {
+    deleteButton.disabled = false;
+    equalsButton.disabled = false;
     checkInvalid();
     appendVal(this);
 }
@@ -31,6 +33,7 @@ function appendVal(elem) {
         if (displayCounter == 0) {
             val = '0' + val;
         }
+        document.getElementById('decimal').disabled = true;
     }
     ongoingVal = (displayCounter == 0) ? val.toString() : ongoingVal + val;
     displayVal(ongoingVal);
@@ -48,12 +51,14 @@ function assignOp() {
 }
 
 function setUpOp() {
+    document.getElementById('decimal').disabled = false;
+    deleteButton.disabled = true;
+    equalsButton.disabled = true;
     if (currentTurn !== 'num') operateOngoing();
     displayCounter = 0;
     checkInvalid();
 }
 
-// Operate 
 function operateOngoing() {
     ongoingNum = Number(ongoingVal);
     result = operate(result, ongoingNum, currentOp);
@@ -95,7 +100,9 @@ function operate(x, y, op) {
 }
 
 function printResult() {
-    ongoingNum = (ongoingNum == result) ? 0 : Number(ongoingVal);
+    document.getElementById('decimal').disabled = false;
+    deleteButton.disabled = true;
+    ongoingNum = Number(ongoingVal);
     result = operate(result, ongoingNum, currentOp);
     displayVal(result);
     checkInvalid();
