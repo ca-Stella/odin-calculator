@@ -125,7 +125,6 @@ function displayVal(x) {
         } else {
         displayWindow.innerHTML = x;
     }
-
 }
 
 function clearAll() {

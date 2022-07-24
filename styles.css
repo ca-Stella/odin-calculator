@@ -87,6 +87,11 @@ button {
   height: 15%;
   border-radius: 10px;
   outline: 0;
+  transition: all 0.1s ease;
+}
+
+button:hover:enabled {
+  transform: scale(1.05);
 }
 
 .numbers button {
@@ -97,6 +102,10 @@ button.num {
   background-color:rgba(245, 183, 107, 0.5);
 }
 
+button.num:hover {
+  background-color: rgb(243, 176, 94);
+}
+
 .math button {
   width: 100%;
 }
@@ -105,9 +114,24 @@ button.num {
   background-color:rgba(235, 122, 105, 0.5);
 }
 
+#clearAll:hover,
+#clearAll:hover {
+  background-color: rgba(228, 80, 57, 0.5);
+}
+
 button.operation, 
 button.setting {
   background-color: rgba(249, 225, 87, 0.3);
+}
+
+button.operation:hover:enabled,
+button.setting:hover:enabled {
+  background-color: rgb(249, 211, 87);
+}
+
+button.operation.pressed {
+  background-color: rgb(249, 211, 87);
+  transform: scale(1.05);
 }
 
 /* Footer */
