@@ -163,8 +163,14 @@ function disableForResults() {
 function supportKeyboard(e) {
     const ek = e.key;
     console.log(ek);
-    if (ek >= 0 || ek <= 9 || ek == '.') {
-        appendVal(takeKeyVal(ek));
+    if (ek >= 0 || ek <= 9) {
+        appendVal(ek);
+        equalsButton.disabled = false;
+        deleteButton.disabled = false;
+    } else if (ek == '.' && !decButton.disabled) {
+        appendVal(formatKeyVal(ek));
+        equalsButton.disabled = false;
+        deleteButton.disabled = false;
     } else if (ek == '+') {
         assignKeyOp(document.getElementById('plus'));
     } else if (ek == '-') {
@@ -175,20 +181,18 @@ function supportKeyboard(e) {
         assignKeyOp(document.getElementById('divide'));
     } else if (ek == '^') {
         assignKeyOp(document.getElementById('exponent'));
-    } else if (ek == 'Backspace') {
+    } else if (ek == 'Backspace' && !deleteButton.disabled) {
         deleteOne();
-    } else if (ek == '=' || ek == 'Enter') {
+    } else if ((ek == '=' || ek == 'Enter') && !equalsButton.disabled) {
         printResult();
     }
 }
 
-function takeKeyVal(val) {
-    if (val == '.') {
-        if (displayCounter == 0) {
-            val = '0' + val;
-        } 
-        document.getElementById('decimal').disabled = true;
-    }
+function formatKeyVal(val) {
+    if (displayCounter == 0) {
+        val = '0' + val;
+    } 
+    decButton.disabled = true;
     return val;
 }
 
