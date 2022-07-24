@@ -4,20 +4,24 @@ const operations = document.querySelectorAll('.operation');
 const equalsButton = document.getElementById('equal');
 const clearAllButton = document.getElementById('clearAll');
 const deleteButton = document.getElementById('backspace');
+const decButton = document.getElementById('decimal');
 
 // Set variables
 let ongoingVal = '', currentOp = '';
 let ongoingNum = 0, displayCounter = 0, result = 0;
 let currentTurn = 'num';
 
+// Add event listeners
 numbers.forEach(num => num.addEventListener('click', assignNum));
 operations.forEach(op => op.addEventListener('click', assignOp));
 equalsButton.addEventListener('click', printResult);
 clearAllButton.addEventListener('mousedown', clearAll);
 deleteButton.addEventListener('click', deleteOne);
 
-// Functions
+// Add keyboard support
+window.addEventListener('keydown', supportKeyboard);
 
+// Functions
 // Assign input as start or continuation of number
 function assignNum() {
     deleteButton.disabled = false;
@@ -29,8 +33,9 @@ function assignNum() {
 function appendVal(val) {
     if (currentOp == 'equals') clearAll();
     ongoingVal = (displayCounter == 0) ? val.toString() : ongoingVal + val;
-    displayVal(ongoingVal);
     currentTurn = 'operation';
+    ongoingNum = Number(ongoingVal);
+    displayVal(ongoingVal);
     displayCounter++;
 }
 
@@ -40,7 +45,7 @@ function formatVal(elem) {
         if (displayCounter == 0) {
             val = '0' + val;
         }
-        document.getElementById('decimal').disabled = true;
+        decButton.disabled = true;
     }
     return val;
 }
@@ -149,7 +154,46 @@ function deleteOne() {
 }
 
 function disableForResults() {
-    document.getElementById('decimal').disabled = false;
+    decButton.disabled = false;
     deleteButton.disabled = true;
     operations.forEach(button => button.classList.remove('pressed'));
+}
+
+// Keyboard support
+function supportKeyboard(e) {
+    const ek = e.key;
+    console.log(ek);
+    if (ek >= 0 || ek <= 9 || ek == '.') {
+        appendVal(takeKeyVal(ek));
+    } else if (ek == '+') {
+        assignKeyOp(document.getElementById('plus'));
+    } else if (ek == '-') {
+        assignKeyOp(document.getElementById('minus'));
+    } else if (ek == '*') {
+        assignKeyOp(document.getElementById('multiply'));
+    } else if (ek == '/') {
+        assignKeyOp(document.getElementById('divide'));
+    } else if (ek == '^') {
+        assignKeyOp(document.getElementById('exponent'));
+    } else if (ek == 'Backspace') {
+        deleteOne();
+    } else if (ek == '=' || ek == 'Enter') {
+        printResult();
+    }
+}
+
+function takeKeyVal(val) {
+    if (val == '.') {
+        if (displayCounter == 0) {
+            val = '0' + val;
+        } 
+        document.getElementById('decimal').disabled = true;
+    }
+    return val;
+}
+
+function assignKeyOp(elem) {
+    setUpOp();
+    currentOp = elem.id;
+    elem.classList.add('pressed');
 }
