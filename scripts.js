@@ -23,11 +23,18 @@ function assignNum() {
     deleteButton.disabled = false;
     equalsButton.disabled = false;
     checkInvalid();
-    appendVal(this);
+    appendVal(formatVal(this));
 }
 
-function appendVal(elem) {
+function appendVal(val) {
     if (currentOp == 'equals') clearAll();
+    ongoingVal = (displayCounter == 0) ? val.toString() : ongoingVal + val;
+    displayVal(ongoingVal);
+    currentTurn = 'operation';
+    displayCounter++;
+}
+
+function formatVal(elem) {
     let val = elem.innerHTML;
     if (val == '.') {
         if (displayCounter == 0) {
@@ -35,24 +42,17 @@ function appendVal(elem) {
         }
         document.getElementById('decimal').disabled = true;
     }
-    ongoingVal = (displayCounter == 0) ? val.toString() : ongoingVal + val;
-    displayVal(ongoingVal);
-    currentTurn = 'operation';
-    displayCounter++;
+    return val;
 }
 
 // Assign operation based on button clicked
 function assignOp() {
-    ongoingNum = Number(ongoingVal);
-    result = ongoingNum;
-    ongoingVal = 0;
-    currentOp = this.id;
     setUpOp();
+    currentOp = this.id;
 }
 
 function setUpOp() {
-    document.getElementById('decimal').disabled = false;
-    deleteButton.disabled = true;
+    disableForResults();
     equalsButton.disabled = true;
     if (currentTurn !== 'num') operateOngoing();
     displayCounter = 0;
@@ -100,8 +100,7 @@ function operate(x, y, op) {
 }
 
 function printResult() {
-    document.getElementById('decimal').disabled = false;
-    deleteButton.disabled = true;
+    disableForResults();
     ongoingNum = Number(ongoingVal);
     result = operate(result, ongoingNum, currentOp);
     displayVal(result);
@@ -124,6 +123,7 @@ function displayVal(x) {
 
 function clearAll() {
     setNulls();
+    equalsButton.disabled = false;
     displayWindow.textContent = '';
 }
 
@@ -133,10 +133,16 @@ function setNulls() {
     displayCounter = 0;
     currentOp = '';
     ongoingVal = '';
+    disableForResults();
 }
 
 function deleteOne() {
     ongoingVal = ongoingVal.slice(0,-1);
     ongoingNum = Number(ongoingVal);
     displayWindow.textContent = ongoingVal;
+}
+
+function disableForResults() {
+    document.getElementById('decimal').disabled = false;
+    deleteButton.disabled = true;
 }
