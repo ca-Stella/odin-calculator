@@ -49,6 +49,7 @@ function formatVal(elem) {
 function assignOp() {
     setUpOp();
     currentOp = this.id;
+    this.classList.add('pressed');
 }
 
 function setUpOp() {
@@ -117,8 +118,14 @@ function checkInvalid() {
 
 // Display exact or rounded values based on length
 function displayVal(x) {
-    let editedVal = (x.toString().length > 8) ? parseFloat(x).toExponential(3) : x;
-    displayWindow.textContent = editedVal;
+    if (x.toString().length > 9) {
+        editedVal = parseFloat(x).toExponential(4);
+        let newVal = editedVal.substring(0, editedVal.indexOf("e")) + '&thinsp;' + editedVal.substring(editedVal.indexOf("e")).sub();
+        displayWindow.innerHTML = newVal;
+        } else {
+        displayWindow.innerHTML = x;
+    }
+
 }
 
 function clearAll() {
@@ -145,4 +152,5 @@ function deleteOne() {
 function disableForResults() {
     document.getElementById('decimal').disabled = false;
     deleteButton.disabled = true;
+    operations.forEach(button => button.classList.remove('pressed'));
 }

@@ -5,6 +5,16 @@ html {
   width: 100vw;
 }
 
+body {
+  height: 100%;
+}
+
+/* Header */ 
+header {
+  text-align: center;
+  font-family: "Trebuchet MS", sans-serif;
+}
+
 /* Calculator */
 .main {
   display: flex;
@@ -25,16 +35,17 @@ html {
   max-width: 360px;
   max-height: 560px;
   padding: 40px;
-  background-color:rgb(255, 244, 230);
+  background-color:rgba(255, 244, 230, 0.7);
   border: 5px solid black;
   border-radius: 20px;
 }
 
 #display {
+  font-family: "PT Mono", monospace;
   text-align: end;
   display:flex;
   justify-content: end;
-  align-items: flex-end;
+  align-items: end;
   height: 25%;
   width: 100%;
   margin-bottom: 40px;
@@ -71,9 +82,11 @@ html {
 
 /* buttons */
 button {
+  font-family: "PT Mono", monospace;
   font-size: 30px;
   height: 15%;
   border-radius: 10px;
+  outline: 0;
 }
 
 .numbers button {
@@ -81,11 +94,15 @@ button {
 }
 
 button.num {
-  background-color:rgba(235, 176, 105, 0.5);
+  background-color:rgba(245, 183, 107, 0.5);
 }
 
 .math button {
   width: 100%;
+}
+
+#clearAll {
+  background-color:rgba(235, 122, 105, 0.5);
 }
 
 button.operation, 
@@ -94,7 +111,8 @@ button.setting {
 }
 
 /* Footer */
-.footer {
+footer {
+  font-family: "Trebuchet MS", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
