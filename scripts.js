@@ -39,6 +39,7 @@ function appendVal(val) {
     displayCounter++;
 }
 
+// Format printed value if decimal is the first input
 function formatVal(elem) {
     let val = elem.innerHTML;
     if (val == '.') {
@@ -57,6 +58,7 @@ function assignOp() {
     this.classList.add('pressed');
 }
 
+// Prepare for operation to be conducted
 function setUpOp() {
     disableForResults();
     equalsButton.disabled = true;
@@ -72,6 +74,7 @@ function operateOngoing() {
     currentTurn = 'num';
 }
 
+// Take input(s) and conduct mathematical operation if possible
 function operate(x, y, op) {    
     let z = 0;
     switch (op) {
@@ -105,6 +108,7 @@ function operate(x, y, op) {
     return z;
 }
 
+// Print the result to the display screen
 function printResult() {
     disableForResults();
     ongoingNum = Number(ongoingVal);
@@ -153,16 +157,17 @@ function deleteOne() {
     displayWindow.textContent = ongoingVal;
 }
 
+// Disable buttons when needed to enhance user experience and to prevent errors 
+// and/or any potential bugs
 function disableForResults() {
     decButton.disabled = false;
     deleteButton.disabled = true;
     operations.forEach(button => button.classList.remove('pressed'));
 }
 
-// Keyboard support
+// Support keyboard input 
 function supportKeyboard(e) {
     const ek = e.key;
-    console.log(ek);
     if (ek >= 0 || ek <= 9) {
         appendVal(ek);
         equalsButton.disabled = false;
@@ -188,6 +193,7 @@ function supportKeyboard(e) {
     }
 }
 
+// Format printed decimal value if given keyboard input 
 function formatKeyVal(val) {
     if (displayCounter == 0) {
         val = '0' + val;
